@@ -1,5 +1,6 @@
 import image_3 from "../assets/image_3.png";
-import "./home.css"
+import "../App.css"
+import AllRecipes from "../components/Recipes";
 function Home() {
   return (
     <div>
@@ -25,6 +26,7 @@ function Home() {
           />
         </svg>
       </div>
+      <AllRecipes />
     </div>
   );
 }

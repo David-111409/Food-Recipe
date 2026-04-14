@@ -1,6 +1,7 @@
 // App.tsx
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
+import Navbar from "./components/Nav";
 // import RecipeDetails from "./pages/RecipeDetails";
 // import CreateRecipe from "./pages/CreateRecipe";
 // import Navbar from "./components/Navbar";
@@ -8,7 +9,7 @@ import Home from "./pages/Home";
 function App() {
   return (
     <>
-      {/* <Navbar /> Navbar will stay visible on all pages */}
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         {/* <Route path="/recipe/:id" element={<RecipeDetails />} />
