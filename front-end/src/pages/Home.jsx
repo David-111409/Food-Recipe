@@ -1,6 +1,7 @@
 import image_3 from "../assets/image_3.png";
-import "../App.css"
+import "../App.css";
 import AllRecipes from "../components/Recipes";
+import { Link } from "react-router-dom";
 function Home() {
   return (
     <div>
@@ -11,7 +12,7 @@ function Home() {
             Join our community of food lovers and share your favorite recipes with the world.
             Whether it is a family secret or a new creation. We want to see it!
           </p>
-          <button>Share your recipe</button>
+          <Link to={"/add-recipe"}>Share your recipe</Link>
         </div>
         <div className="right">
           <img src={image_3} alt="image_2" width={"350px"} height={"350px"} />

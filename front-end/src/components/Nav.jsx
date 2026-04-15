@@ -1,6 +1,31 @@
 import logo from "../assets/logo.png";
-
+import Modal from "./Modal";
+import { useState, useEffect } from "react";
+import InputForm from "./InputForm";
+import { Link } from "react-router-dom";
 function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  let token = localStorage.getItem("token");
+  const [isLogin, setIsLogin] = useState(!!token);
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const checkLogin = () => {
+    if (token) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      setIsLogin(false);
+    } else {
+      setIsOpen(true);
+    }
+  };
+
+  useEffect(() => {
+    const handleToken = () => setIsLogin(!!token);
+    handleToken();
+  }, [token]);
   return (
     <>
       <header>
@@ -21,31 +46,52 @@ function Navbar() {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav ms-auto">
+            <ul className="navbar-nav px-2 mx-auto">
               <li className="nav-item active">
-                <a className="nav-link" href="/">
-                  Home <span className="sr-only"></span>
-                </a>
+                <Link className="nav-link" to="/">
+                  Home
+                </Link>
               </li>
+
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" to="/favourites">
                   My Favourites
-                </a>
+                </Link>
               </li>
 
               <li className="nav-item">
-                <a className="nav-link" href="#"> My Recipes</a>
+                <Link className="nav-link" to="/my-recipes">
+                  My Recipes
+                </Link>
               </li>
 
               <li className="nav-item">
-                <a className="nav-link " href="#">
+                <Link className="nav-link" to="/contact">
                   Contact
-                </a>
+                </Link>
               </li>
+
+              <li className="nav-item">
+                <button
+                  className="btn btn-outline-light ms-lg-3"
+                  style={{ borderRadius: "8px" }}
+                  onClick={checkLogin}
+                >
+                  {isLogin ? "Logout" : "Login"}
+                </button>
+              </li>
+              <button style={{ borderRadius: "8px" }} onClick={checkLogin}>
+                {isLogin ? "Logout" : "Login"}
+              </button>
             </ul>
           </div>
         </nav>
       </header>
+      {isOpen && (
+        <Modal onClose={closeModal}>
+          <InputForm />
+        </Modal>
+      )}
     </>
   );
 }

@@ -23,7 +23,7 @@
 .modal-header {
   border: none !important;
 }
-.left button {
+button {
   background-color: #ff9560;
   margin-top: 10px;
   font-size: 18px;
@@ -34,6 +34,7 @@
   padding: 5px 12px;
   border-radius: 5px;
   cursor: pointer;
+  margin-left: 10px;
 }
 .error {
   margin-top: 10px;
@@ -41,14 +42,16 @@
   font-size: 16px;
 }
 
-header button {
+.home a {
   background-color: #ff9560;
   font-size: 18px;
-  margin: 0 !important;
   color: white;
   transition: all 0.3s ease;
   border: none;
   outline: none;
+  padding: 5px 12px;
+  text-decoration: none;
+  border-radius: 5px;
 }
 .recipe-card img {
   height: 300px;

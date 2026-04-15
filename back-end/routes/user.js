@@ -67,7 +67,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// @route   GET /user/:id
+// @route   GET /user/id
 // @desc    get user by ID
 router.get("/:id", async (req, res) => {
   try {
