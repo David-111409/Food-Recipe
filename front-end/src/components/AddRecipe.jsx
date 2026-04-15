@@ -4,6 +4,7 @@ import axios from "axios";
 
 function AddRecipe() {
   const [recipe, setRecipe] = useState({});
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const onHandleChange = (e) => {
@@ -22,11 +23,12 @@ function AddRecipe() {
       await axios.post("http://localhost:3000/recipes", recipe);
       navigate("/");
     } catch (error) {
+      setError(error.response?.data?.message);
       console.log("Error Message:", error.response?.data?.message);
       console.log("Status Code:", error.response?.status);
     }
   };
-  
+
   return (
     <form className="input-form w-50 m-auto" onSubmit={onHandleSubmit}>
       <input
@@ -60,6 +62,11 @@ function AddRecipe() {
         onChange={onHandleChange}
       />
       <div className="text-center">
+        {error && (
+          <h5 className="mt-2" style={{ color: "red" }}>
+            {error}
+          </h5>
+        )}
         <button className="button mt-5" type="submit">
           save your recipe
         </button>
