@@ -11,26 +11,50 @@ function AddRecipe() {
     let val;
     if (e.target.name === "ingredients") {
       val = e.target.value.split(",");
+    } else if (e.target.name === "coverImage") {
+      val = e.target.files[0];
     } else {
       val = e.target.value;
     }
     setRecipe((prev) => ({ ...prev, [e.target.name]: val }));
   };
 
-  const onHandleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
+    console.log(recipe);
     e.preventDefault();
+    const { title, ingredients, instructions, coverImage } = recipe;
+    if (!title || !ingredients || !instructions || !coverImage) {
+      setError("Give all fields");
+      return;
+    }
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("ingredients", ingredients);
+    formData.append("instructions", instructions);
+
+    // تأكد أن الاسم 'coverImage' يطابق الاسم الموجود في Multer بالباك إيند
+    if (recipe.coverImage) {
+      formData.append("coverImage", coverImage);
+    }
+
     try {
-      await axios.post("http://localhost:3000/recipes", recipe);
+      await axios.post("http://localhost:3000/recipes", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // ضروري جداً لرفع الملفات
+          // إذا كنت تستخدم توكن، أضفه هنا أيضاً:
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      alert("Recipe added successfully!");
       navigate("/");
     } catch (error) {
-      setError(error.response?.data?.message);
-      console.log("Error Message:", error.response?.data?.message);
-      console.log("Status Code:", error.response?.status);
+      setError(error.message);
+      console.error("Error details:", error.response?.data?.message || error.message);
     }
   };
 
   return (
-    <form className="input-form w-50 m-auto" onSubmit={onHandleSubmit}>
+    <form className="input-form w-50 m-auto" onSubmit={handleSubmit}>
       <input
         name="title"
         className="form-control mt-3"

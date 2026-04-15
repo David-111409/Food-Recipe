@@ -26,13 +26,14 @@ function Navbar() {
     const handleToken = () => setIsLogin(!!token);
     handleToken();
   }, [token]);
+
   return (
     <>
       <header>
         <nav className="navbar navbar-expand-lg mt-3 ">
-          <a className="navbar-brand" href="#">
+          <Link className="navbar-brand" to="/">
             <img src={logo} />
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -72,17 +73,10 @@ function Navbar() {
               </li>
 
               <li className="nav-item">
-                <button
-                  className="btn btn-outline-light ms-lg-3"
-                  style={{ borderRadius: "8px" }}
-                  onClick={checkLogin}
-                >
+                <button style={{ borderRadius: "8px" }} onClick={checkLogin}>
                   {isLogin ? "Logout" : "Login"}
                 </button>
               </li>
-              <button style={{ borderRadius: "8px" }} onClick={checkLogin}>
-                {isLogin ? "Logout" : "Login"}
-              </button>
             </ul>
           </div>
         </nav>

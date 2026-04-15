@@ -1,6 +1,6 @@
 import express from "express";
 import { Recipe } from "../models/Recipe.js";
-
+import { upload } from "../middleware/mutler.js";
 const router = express.Router();
 
 // Get recipes all
@@ -9,23 +9,29 @@ router.get("/", async (req, res) => {
     const recipes = await Recipe.find();
     res.status(200).json({ count: recipes.length, recipes });
   } catch (error) {
-    res.status(500).json({ message: "Get Failed " +  error.message });
+    res.status(500).json({ message: "Get Failed " + error.message });
   }
 });
 
 // Create recipe
-router.post("/", async (req, res) => {
+router.post("/", upload.single("coverImage"), async (req, res) => {
   try {
     const { title, ingredients, instructions } = req.body;
-    if (!title || !ingredients || !instructions) {
-      return res.status(400).send({ message: "All fields are required!" });
-    }
 
-    const newRecipe = await Recipe.create(req.body);
+    // مسار الصورة المحفوظة في السيرفر
+    const imagePath = req.file ? req.file.path : "";
 
-    res.status(201).json(newRecipe);
+    const newRecipe = new Recipe({
+      title,
+      ingredients,
+      instructions,
+      coverImage: imagePath, // حفظ المسار في قاعدة البيانات
+    });
+
+    await newRecipe.save();
+    res.status(201).json({ message: "Recipe created with image!", recipe: newRecipe });
   } catch (error) {
-    res.status(500).json({ message: "Create failed: " + error.message });
+    res.status(500).json({ message: error.message });
   }
 });
 

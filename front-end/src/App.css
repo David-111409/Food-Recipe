@@ -71,9 +71,7 @@ button {
   font-size: 23px;
   margin-right: 10px;
 }
-button:hover {
-  background-color: #cf4303;
-}
+
 
 .navbar {
   display: flex;

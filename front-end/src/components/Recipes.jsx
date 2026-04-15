@@ -19,8 +19,12 @@ function AllRecipes() {
 
       <div className="cards-wrapper">
         {recipes?.map((recipe) => {
+          const { coverImage } = recipe;
           return (
             <div className="recipe-card" key={recipe?._id}>
+              {coverImage && (
+                <img className="w-100" src={`http://localhost:3000/${recipe?.coverImage}`} alt={recipe.title} />
+              )}
               <h4 className="mt-4">{recipe?.title}</h4>
               <p>{recipe?.ingredients}</p>
               <HiHeart className="icons" />

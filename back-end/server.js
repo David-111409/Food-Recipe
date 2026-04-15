@@ -11,10 +11,11 @@ const app = express();
 // Middlewares
 app.use(express.json());
 app.use(cors());
+app.use("/uploads", express.static("uploads"));
+
 
 app.use("/recipes", recipeRoute);
 app.use("/user", userRoute);
-
 
 const PORT = process.env.PORT || 3000;
 
